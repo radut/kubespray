@@ -28,10 +28,13 @@
       },
 {% else %}
       "ipam": {
-        "type": "calico-ipam",
-        "assign_ipv4": "true",
-        "ipv4_pools": ["{{ calico_pool_cidr | default(kube_pods_subnet) }}"]
-      },
+         "type": "host-local",
+         "ranges": [
+                    [
+                      { "subnet": "usePodCidr" }
+                    ]
+                   ]
+       },
 {% endif %}
 {% if (calico_feature_control is defined) and (calico_feature_control|length > 0) %}
       "feature_control": {
